@@ -1,0 +1,81 @@
+# Angular 2 & NativeScript Cross-Platform Application
+-------------------
+## Set Up
+- [ ] install node
+  check if installed `node --version`
+  else `brew install node4-lts`
+  || https://nodejs.org/en/download/
+
+- [ ] make sure Android SDK is set up correctly
+  ` brew install android-sdk`
+  https://developer.android.com/studio/index.html
+
+- [ ] install the NativeScript CLI
+  `npm i nativescript -g`
+   check with `tns`
+   Answer 'no' to install questions
+     " Do you want to visit the official documentation? No
+       Do you want to run the setup script? No"
+  Preference:
+    "If you are using bash or zsh, you can enable command-line completion.
+    ? Do you want to enable it now? Yes"
+
+- [ ] iOS & Android requirements
+  can use NativeScripts quick-start scripts
+    - windows: `@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://www.nativescript.org/setup/win'))"`
+    - osx: `ruby -e "$(curl -fsSL https://www.nativescript.org/setup/mac)"`
+
+- [ ] Verify Setup
+  `tns doctor`
+
+- ? `ANDROID_HOME` not set?
+  - check `echo $ANDROID_HOME`
+  - does it live here? `/usr/local/opt/android-sdk`
+  - set it & and your path in `.bashrc` or `.zshrc`:
+    export ANDROID_HOME=/usr/local/opt/android-sdk
+    export PATH=$PATH:/usr/local/Cellar/android-sdk/24.1.1_1/tools:/usr/local/Cellar/android-sdk/24.4.1_1/platform-tools
+
+- ? is the Android emulator not working?
+  - open the android panel with `android` & make sure everything is installed
+  - make sure your android emulator is created and made correctly
+  - use `android avd` to setup the virtual device
+  - hit `start` to make sure it works correctly
+
+## File Structure
+- app: folder contains all the development resources
+- hooks: preprocess typescript to nativescript
+- node_modules/@angular: Angular 2 source code. NS builds on top of ng2 with
+  their nativescrip-angular node module instead of altering the ng2 code in any
+  way.
+
+### App File Structure
+- app-resources: platform-specific icons, splash screens & config files. `tns
+  run` places these resources in the correct places.
+- pages: for each page you have a Typescript file, optional HTML file and
+  optional CSS files.
+- shared: files that you need to share between ng2 & NS like model objects,
+  config.ts to share config variables like API keys.
+- app.css: global styling for the app
+- app.component.ts: primary Angular component that drives your app.
+- app.module.ts: main config for your app
+- main.ts: starting point of ng2 apps (web & native)
+
+## App Parts
+- in `app/app.module.ts` bootstrap set to `AppComponent` this config passes
+  control to the `AppComponwent` class in `app/app.component.ts` file
+- ng2 component is a main building block of Angular 2 apps,
+- In Angular 2 a component manages a view, or a piece of the user interface
+  that the user sees
+- An app is created by using components as UI components or entire pages.
+- _TypeScript is a first-class citizen in both NS & ng2. NS and ng2 are both
+  built in TypeScript. Everytime you `run`, `livesync` or `build` your app, the
+  files are recompiled form TypeScript to JavaScript._
+- thw `@Component` syntax is a TS decorator which allows you to annotate a TS
+  class or method with more info.
+- NS do not have a browser or DOM so elements like `<div>` or `<span` don't
+  work. Instead NS has a suite of UI elements which are implemented with native
+  iOS and Android controls, e.g., `<Label>` controls is rendered as `UILabel`
+  on iOS and `android.widget.TextView` on Android. For you though, you use
+  `<Label>` and let NS handle it. [NS UI Components](http://docs.nativescript.org/ui/components)
+-
+
